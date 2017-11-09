@@ -1,0 +1,1 @@
+To run this program open up main.java and click run
