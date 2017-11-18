@@ -1,15 +1,18 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Controls the camera and draws the cube.
+ * Last modified: 11/11/17
  */
 package cube;
+import java.io.*;
 import static org.lwjgl.opengl.GL11.*;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.Sys;
+import org.newdawn.slick.opengl.Texture;
+import org.newdawn.slick.opengl.TextureLoader;
+import org.newdawn.slick.util.ResourceLoader;
 
 
 public class FPCameraController {
@@ -21,6 +24,11 @@ public class FPCameraController {
     //the rotation around the X axis of the camera
     private float pitch = 0.0f;
     private Vector3Float me;
+    
+    private int VBOTextureHandle;
+    private Texture texture;
+    private Chunk chunk = new Chunk(0,0,0);
+ 
     
     public FPCameraController(float x, float y, float z)
     {
@@ -88,7 +96,7 @@ public class FPCameraController {
     }
     
     //translates and rotate the matrix so that it looks through the camera
-//this does basically what gluLookAt() does
+    //this does basically what gluLookAt() does
     public void lookThrough()
     {
         //roatate the pitch around the X axis
@@ -113,7 +121,7 @@ public class FPCameraController {
         Mouse.setGrabbed(true);
        
         
-                // keep looping till the display window is closed the ESC key is down
+        // keep looping till the display window is closed or the ESC key is down
         while (!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
         {
             time = Sys.getTime();
@@ -161,13 +169,14 @@ public class FPCameraController {
                 camera.moveDown(movementSpeed);
             }
            
-                        //set the modelview matrix back to the identity
+            //set the modelview matrix back to the identity
             glLoadIdentity();
             //look through the camera before you draw anything
             camera.lookThrough();
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             //you would draw your scene here.
-            render();
+            chunk.render();
+            //render();
             //draw the buffer to the screen
             Display.update();
             Display.sync(60);
@@ -176,72 +185,93 @@ public class FPCameraController {
         Display.destroy(); 
     }
     
+    public void loadTexture() {
+        Texture currentT = null;
+        try {
+            texture = TextureLoader.getTexture("PNG", new FileInputStream(new File("grass.png")));
+            // Replace PNG with your file extension
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            Display.destroy();
+            System.exit(1);
+        } catch (IOException e) {
+            e.printStackTrace();
+            Display.destroy();
+            System.exit(1);
+        }
+        texture = currentT;
+    }
+        
+    
+    
     private void render() {
         try{
-            glBegin(GL_QUADS);
-            //Top
-            glColor3f(0.0f,0.0f,2.0f);
-            glVertex3f( 2.0f, 2.0f,-2.0f);
-            glVertex3f(-2.0f, 2.0f,-2.0f);
-            glVertex3f(-2.0f, 2.0f, 2.0f);
-            glVertex3f( 2.0f, 2.0f, 2.0f);
+                     
             
-            //Bottom
-            glColor3f(0.0f,2.0f,0.0f);
-            glVertex3f( 2.0f,-2.0f, 2.0f);
-            glVertex3f(-2.0f,-2.0f, 2.0f);
-            glVertex3f(-2.0f,-2.0f,-2.0f);
-            glVertex3f( 2.0f,-2.0f,-2.0f);
+//            glBegin(GL_QUADS);
+//            //Top
+//            glColor3f(0.0f,0.0f,2.0f);
+//            glVertex3f( 2.0f, 2.0f,-2.0f);
+//            glVertex3f(-2.0f, 2.0f,-2.0f);
+//            glVertex3f(-2.0f, 2.0f, 2.0f);
+//            glVertex3f( 2.0f, 2.0f, 2.0f);
             
-            //Front
-            glColor3f(2.0f,0.0f,0.0f);
-            glVertex3f( 2.0f, 2.0f, 2.0f);
-            glVertex3f(-2.0f, 2.0f, 2.0f);
-            glVertex3f(-2.0f,-2.0f, 2.0f);
-            glVertex3f( 2.0f,-2.0f, 2.0f);
-            
-            //Back
-            glColor3f(0.0f,2.0f,2.0f);
-            glVertex3f( 2.0f,-2.0f,-2.0f);
-            glVertex3f(-2.0f,-2.0f,-2.0f);
-            glVertex3f(-2.0f, 2.0f,-2.0f);
-            glVertex3f( 2.0f, 2.0f,-2.0f);
-            //Left
-            glColor3f(2.0f,0.0f,2.0f);
-            glVertex3f(-2.0f, 2.0f,2.0f);
-            glVertex3f(-2.0f, 2.0f,-2.0f);
-            glVertex3f(-2.0f,-2.0f,-2.0f);
-            glVertex3f(-2.0f,-2.0f, 2.0f);
-            //Right
-            glColor3f(2.0f,2.0f,0.0f);
-            glVertex3f( 2.0f, 2.0f,-2.0f);
-            glVertex3f( 2.0f, 2.0f, 2.0f);
-            glVertex3f( 2.0f,-2.0f, 2.0f);
-            glVertex3f( 2.0f,-2.0f,-2.0f);
-            glEnd();
-            
-            glBegin(GL_LINE_LOOP);
-            //Top
-            glColor3f(0.0f,0.0f,0.0f);
-            glVertex3f( 2.0f, 2.0f,-2.0f);
-            glVertex3f(-2.0f, 2.0f,-2.0f);
-            glVertex3f(-2.0f, 2.0f, 2.0f);
-            glVertex3f( 2.0f, 2.0f, 2.0f);
-            glEnd();
-            glBegin(GL_LINE_LOOP);
-            //Bottom
-            glVertex3f( 2.0f,-2.0f, 2.0f);
-            glVertex3f(-2.0f,-2.0f, 2.0f);
-            glVertex3f(-2.0f,-2.0f,-2.0f);
-            glVertex3f( 2.0f,-2.0f,-2.0f);
-            glEnd();
-            glBegin(GL_LINE_LOOP);
-            //Front
-            glVertex3f( 2.0f, 2.0f, 2.0f);
-            glVertex3f(-2.0f, 2.0f, 2.0f);
-            glVertex3f(-2.0f,-2.0f, 2.0f);
-            glVertex3f( 2.0f,-2.0f, 2.0f);
-            glEnd();
+//            //Bottom
+//            glColor3f(0.0f,2.0f,0.0f);
+//            glVertex3f( 2.0f,-2.0f, 2.0f);
+//            glVertex3f(-2.0f,-2.0f, 2.0f);
+//            glVertex3f(-2.0f,-2.0f,-2.0f);
+//            glVertex3f( 2.0f,-2.0f,-2.0f);
+//            
+//            //Front
+//            glColor3f(2.0f,0.0f,0.0f);
+//            glVertex3f( 2.0f, 2.0f, 2.0f);
+//            glVertex3f(-2.0f, 2.0f, 2.0f);
+//            glVertex3f(-2.0f,-2.0f, 2.0f);
+//            glVertex3f( 2.0f,-2.0f, 2.0f);
+//            
+//            //Back
+//            glColor3f(0.0f,2.0f,2.0f);
+//            glVertex3f( 2.0f,-2.0f,-2.0f);
+//            glVertex3f(-2.0f,-2.0f,-2.0f);
+//            glVertex3f(-2.0f, 2.0f,-2.0f);
+//            glVertex3f( 2.0f, 2.0f,-2.0f);
+//            //Left
+//            glColor3f(2.0f,0.0f,2.0f);
+//            glVertex3f(-2.0f, 2.0f,2.0f);
+//            glVertex3f(-2.0f, 2.0f,-2.0f);
+//            glVertex3f(-2.0f,-2.0f,-2.0f);
+//            glVertex3f(-2.0f,-2.0f, 2.0f);
+//            //Right
+//            glColor3f(2.0f,2.0f,0.0f);
+//            glVertex3f( 2.0f, 2.0f,-2.0f);
+//            glVertex3f( 2.0f, 2.0f, 2.0f);
+//            glVertex3f( 2.0f,-2.0f, 2.0f);
+//            glVertex3f( 2.0f,-2.0f,-2.0f);
+//            glEnd();
+//            
+//            glBegin(GL_LINE_LOOP);
+//            //Top
+//            glColor3f(0.0f,0.0f,0.0f);
+//            glVertex3f( 2.0f, 2.0f,-2.0f);
+//            glVertex3f(-2.0f, 2.0f,-2.0f);
+//            glVertex3f(-2.0f, 2.0f, 2.0f);
+//            glVertex3f( 2.0f, 2.0f, 2.0f);
+//            glEnd();
+//            glBegin(GL_LINE_LOOP);
+//            //Bottom
+//            glVertex3f( 2.0f,-2.0f, 2.0f);
+//            glVertex3f(-2.0f,-2.0f, 2.0f);
+//            glVertex3f(-2.0f,-2.0f,-2.0f);
+//            glVertex3f( 2.0f,-2.0f,-2.0f);
+//            glEnd();
+//            glBegin(GL_LINE_LOOP);
+//            //Front
+//            glVertex3f( 2.0f, 2.0f, 2.0f);
+//            glVertex3f(-2.0f, 2.0f, 2.0f);
+//            glVertex3f(-2.0f,-2.0f, 2.0f);
+//            glVertex3f( 2.0f,-2.0f, 2.0f);
+//            glEnd();
         }catch(Exception e){
         }
       }

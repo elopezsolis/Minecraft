@@ -5,11 +5,14 @@ import static org.lwjgl.opengl.GL11.*;
 import org.lwjgl.util.glu.GLU;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.Display;
+import org.newdawn.slick.opengl.Texture;
+import org.newdawn.slick.opengl.TextureLoader;
+import org.newdawn.slick.util.ResourceLoader;
 
 
 
 public class CUBE {
-    private FPCameraController fp = new FPCameraController(0f,0f,0f);
+    private FPCameraController fp;
     private DisplayMode displayMode;
     
     public static void main(String[] args) {
@@ -21,7 +24,10 @@ public class CUBE {
         try {
             createWindow();
             initGL();
+            fp = new FPCameraController(0f,0f,0f);
+            fp.loadTexture();
             fp.gameLoop();//render();
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -52,5 +58,13 @@ public class CUBE {
         displayMode.getHeight(), 0.1f, 300.0f);
         glMatrixMode(GL_MODELVIEW);
         glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+        
+        glEnable(GL_TEXTURE_2D);
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+        
+        glEnableClientState(GL_VERTEX_ARRAY);
+        glEnableClientState(GL_COLOR_ARRAY);
+        glEnable(GL_DEPTH_TEST);
+
     }
 }
