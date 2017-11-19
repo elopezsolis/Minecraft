@@ -122,6 +122,7 @@ public class Chunk {
         float offset = (1024f / 16) / 1024f;
         //switch (block.GetID()) {
             //case 1:
+            //NOTE: for now switch statement removed as only making one cube rn
                 return new float[]{
                     // BOTTOM QUAD(DOWN=+Y)
                     x + offset * 3, y + offset * 10,
@@ -158,9 +159,9 @@ public class Chunk {
         
     public Chunk(int startX, int startY, int startZ) {
         try {
-            texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("grass.png"));
+            texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("terrain.png"));
         } catch (Exception e) {
-            System.out.print("ER-ROAR!");
+            System.out.print("Texture not found.");
         }
         
         r = new Random();

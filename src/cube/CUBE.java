@@ -25,7 +25,6 @@ public class CUBE {
             createWindow();
             initGL();
             fp = new FPCameraController(0f,0f,0f);
-            fp.loadTexture();
             fp.gameLoop();//render();
             
         } catch (Exception e) {
