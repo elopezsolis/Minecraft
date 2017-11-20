@@ -122,35 +122,37 @@ public class Chunk {
         float offset = (1024f / 16) / 1024f;
         //switch (block.GetID()) {
             //case 1:
-            //NOTE: for now switch statement removed as only making one cube rn
+            //CHANGE LATER--for now switch statement removed as only making one cube
                 return new float[]{
-                    // BOTTOM QUAD(DOWN=+Y)
-                    x + offset * 3, y + offset * 10,
-                    x + offset * 2, y + offset * 10,
-                    x + offset * 2, y + offset * 9,
-                    x + offset * 3, y + offset * 9,
-                    // TOP!
+                    //The faces of the cube are created here. 
+                    //ORDER MATTERS: Top left, top right, bottom right, then top left
+                    // TOP
+                    x + offset * 2, y + offset * 9, //Top left corner; tile 2, 9 (3rd from the left, 10th from the top)
+                    x + offset * 3, y + offset * 9, //Top right corner
+                    x + offset * 3, y + offset * 10, //Bottom right corner 
+                    x + offset * 2, y + offset * 10, //Bottom left corner
+                    // BOTTOM
+                    x + offset * 2, y + offset * 0, //tile 2, 0
+                    x + offset * 3, y + offset * 0,
                     x + offset * 3, y + offset * 1,
                     x + offset * 2, y + offset * 1,
-                    x + offset * 2, y + offset * 0,
-                    x + offset * 3, y + offset * 0,
                     // FRONT QUAD
-                    x + offset * 3, y + offset * 0,
-                    x + offset * 4, y + offset * 0,
-                    x + offset * 4, y + offset * 1,
-                    x + offset * 3, y + offset * 1,
+                    x + offset * 3, y + offset * 0, //tile 3, 0 TL
+                    x + offset * 4, y + offset * 0, //TR
+                    x + offset * 4, y + offset * 1, //BR
+                    x + offset * 3, y + offset * 1, //BL
                     // BACK QUAD
-                    x + offset * 4, y + offset * 1,
-                    x + offset * 3, y + offset * 1,
-                    x + offset * 3, y + offset * 0,
-                    x + offset * 4, y + offset * 0,
+                    x + offset * 4, y + offset * 1, //tile 3,0 but order is flipped because it's the backface
+                    x + offset * 3, y + offset * 1, //so top right and bottom left switched
+                    x + offset * 3, y + offset * 0, //and bottom right switched with top left
+                    x + offset * 4, y + offset * 0, 
                     // LEFT QUAD
-                    x + offset * 3, y + offset * 0,
+                    x + offset * 3, y + offset * 0, //tile 3,0
                     x + offset * 4, y + offset * 0,
                     x + offset * 4, y + offset * 1,
                     x + offset * 3, y + offset * 1,
                     // RIGHT QUAD
-                    x + offset * 3, y + offset * 0,
+                    x + offset * 3, y + offset * 0, //tile 3,0
                     x + offset * 4, y + offset * 0,
                     x + offset * 4, y + offset * 1,
                     x + offset * 3, y + offset * 1};
