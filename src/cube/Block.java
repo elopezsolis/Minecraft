@@ -1,9 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cube;
+
+/**
+ * *****************************************************
+ * file: Block.java 
+ * authors: Tomik Ajhajanian, Arineh Abrahamian, Erick Lopez, Jenna Barrett 
+ * class: CS 445 Computer Graphics
+ *
+ * assignment: Final project Check point 2
+ * date last modified: 11/18/2017
+ *
+ * purpose: Can be one of six types: Grass, Sand, Dirt, Water, Stone, or Bedrock. 
+ * Each block has a status of Active or Inactive, and a vector location in 3D space.
+ * *****************************************************
+ */
 
 public class Block {
 
@@ -32,24 +41,33 @@ public class Block {
             BlockID = i;
         }
     }
+    
     public Block(BlockType type) {
         Type = type;
     }
 
+    //method: setCoords(float, float, float)
+    //purpose:Set coordinate position
     public void setCoords(float x, float y, float z) {
         this.x = x;
         this.y = y;
         this.z = z;
     }
 
-    public boolean IsActive() {
-        return IsActive;
-    }
-
+    //method: SetActive(boolean active)
+    //purpose:Set block status to active
     public void SetActive(boolean active) {
         IsActive = active;
     }
+    
+    //method: isActive()
+    //purpose: Return true if active, false otherwise
+    public boolean isActive() {
+        return IsActive;
+    }
 
+    //method: GetID()
+    //purpose: Gets the ID
     public int GetID() {
         return Type.GetID();
     }

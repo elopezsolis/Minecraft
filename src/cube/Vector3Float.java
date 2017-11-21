@@ -1,8 +1,17 @@
-/*
- * Custom Vector3Float class
- * Last modified: 11/11/17
- */
 package cube;
+
+/**
+ * *****************************************************
+ * file: Vector3Float.java 
+ * authors: Tomik Ajhajanian, Arineh Abrahamian, Erick Lopez, Jenna Barrett 
+ * class: CS 445 Computer Graphics
+ * 
+ * assignment: Final project Check point 2 
+ * date last modified: 11/18/2017
+ *
+ * purpose: Stores the camera's position in 3D space.
+ * *****************************************************
+ */
 
 public class Vector3Float {
     public float x, y, z;
