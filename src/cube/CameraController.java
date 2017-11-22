@@ -32,8 +32,6 @@ public class CameraController {
     private float pitch = 0.0f;
     private Chunk chunk = new Chunk(0,0,0);
  
-    //method:
-    //purpose:
     public CameraController(float x, float y, float z)
     {
         //instantiate position Vector3f to the x y z params.

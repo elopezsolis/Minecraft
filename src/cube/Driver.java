@@ -9,7 +9,7 @@ package cube;
  * assignment: Final project Check point 2 
  * date last modified: 11/18/2017
  *
- * purpose: river class handles creating the program
+ * purpose: driver class handles creating the program
  * *****************************************************
  */
 import static org.lwjgl.opengl.GL11.*;

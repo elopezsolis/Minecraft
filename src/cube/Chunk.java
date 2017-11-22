@@ -2,17 +2,15 @@ package cube;
 
 /**
  * *****************************************************
- * file: Chunk.java 
- * authors: Tomik Ajhajanian, Arineh Abrahamian, Erick Lopez, Jenna Barrett 
- * class: CS 445 Computer Graphics
+ * file: Chunk.java authors: Tomik Ajhajanian, Arineh Abrahamian, Erick Lopez,
+ * Jenna Barrett class: CS 445 Computer Graphics
  *
- * assignment: Final project Check point 2
- * date last modified: 11/19/2017
+ * assignment: Final project Check point 2 date last modified: 11/19/2017
  *
- * purpose: Handles the randomization of the terrain and applying the assigned textures to the appropriate blocks.
+ * purpose: Handles the randomization of the terrain and applying the assigned
+ * textures to the appropriate blocks.
  * *****************************************************
  */
-
 import java.nio.FloatBuffer;
 import java.util.Random;
 import org.lwjgl.BufferUtils;
@@ -24,7 +22,7 @@ import org.newdawn.slick.util.ResourceLoader;
 
 public class Chunk {
 
-    static final int CHUNK_SIZE = 10;
+    static final int CHUNK_SIZE = 30;
     static final int CUBE_LENGTH = 2;
     static final float persistanceMin = 0.18f;
     static final float persistanceMax = 0.40f;
@@ -188,7 +186,7 @@ public class Chunk {
             texture = TextureLoader.getTexture("PNG",
                     ResourceLoader.getResourceAsStream("terrain.png"));
         } catch (Exception e) {
-            System.out.print("error!");
+            System.out.print(e);
         }
         r = new Random();
         Blocks = new Block[CHUNK_SIZE][CHUNK_SIZE][CHUNK_SIZE];
@@ -196,12 +194,20 @@ public class Chunk {
         for (int x = 0; x < CHUNK_SIZE; x++) {
             for (int y = 0; y < CHUNK_SIZE; y++) {
                 for (int z = 0; z < CHUNK_SIZE; z++) {
+
+                    float rand = r.nextFloat();
                     if (y == 0) {
                         Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Bedrock);
-                    } else if (z == 29 || z == 0 || x == 29 || x == 0) {
+                    } else if (rand>0.830f) {
+                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Grass);
+                    } else if (rand > 0.664f) {
+                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Sand);
+                    } else if (rand > 0.498f) {
                         Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Dirt);
-                    } else {
-                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Dirt);
+                    } else if (rand > 0.332f) {
+                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Water);
+                    } else  {
+                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Stone);
                     }
                 }
             }

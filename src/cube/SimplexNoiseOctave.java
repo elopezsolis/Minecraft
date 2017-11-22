@@ -278,6 +278,7 @@ public class SimplexNoiseOctave {
       double y4 = y0 - 1.0 + 4.0*G4;
       double z4 = z0 - 1.0 + 4.0*G4;
       double w4 = w0 - 1.0 + 4.0*G4;
+      
       int ii = i & 255;
       int jj = j & 255;
       int kk = k & 255;
