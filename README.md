@@ -8,7 +8,7 @@ To run project, download all of the folder and open it in Netbeans.
 ## Created by
 >Arineh Abrahamian</br>
 >Erick Lopez</br>
->Tomik Ajhajanin</br>
+>Tomik Aghajanin</br>
 >Jenna Barrett</br>
 
 ## To Run
